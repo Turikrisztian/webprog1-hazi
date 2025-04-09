@@ -1,0 +1,6 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+header { background: #2c3e50; color: white; padding: 1rem; }
+#menu { display: flex; gap: 20px; list-style: none; }
+#menu a { color: white; text-decoration: none; }
+#menu a.active { border-bottom: 2px solid red; }
+footer { background: #34495e; color: white; text-align: center; padding: 1rem; }
