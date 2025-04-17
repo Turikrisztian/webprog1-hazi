@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Funkciók</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        nav {
+            background: #333;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        nav li {
+            margin-right: 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background: #575757;
+            border-radius: 3px;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        canvas, svg {
+            border: 1px solid #000;
+            margin-top: 10px;
+        }
+        .drag-area {
+            width: 200px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        #worker-output, #sse-output {
+            height: 100px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML5 Modern Funkciók</h1>
+    
+    <nav>
+        <ul>
+          <li><a href="../index.html">Főoldal</a></li>
+          <li><a href="../page1.html">1. oldal</a></li>
+          <li><a href="../page2.html">2. oldal</a></li>
+          <li><a href="../page3.html">3. oldal</a></li>
+          <li><a href="../table.html">Táblázat</a></li>
+          <li><a href="../html5_features.html">HTML5</a></li>
+          <li><a href="../ajax.html">AJAX</a></li>
+          <li><a href="../gameController.html">Játékvezérlő</a></li>
+          <li><a href="../chart.html">Diagram</a></li>
+          <li class="active"><a href="react.html">React</a></li>
+        </ul>
+      </nav>
+    <nav>
+        <ul>
+            <li><a href="#web-storage">Web Storage</a></li>
+            <li><a href="#web-workers">Web Workers</a></li>
+            <li><a href="#sse">Server-Sent Events</a></li>
+            <li><a href="#geolocation">Geolocation</a></li>
+            <li><a href="#drag-drop">Drag & Drop</a></li>
+            <li><a href="#canvas">Canvas</a></li>
+            <li><a href="#svg">SVG</a></li>
+        </ul>
+    </nav>
+
+    <section id="web-storage">
+        <h2>Web Storage</h2>
+        <p>Adatok tárolása a böngészőben localStorage használatával</p>
+        <input type="text" id="storage-input" placeholder="Írj ide valamit...">
+        <button onclick="saveToStorage()">Mentés</button>
+        <button onclick="loadFromStorage()">Betöltés</button>
+        <button onclick="clearStorage()">Törlés</button>
+        <p id="storage-output"></p>
+    </section>
+
+    <section id="web-workers">
+        <h2>Web Workers</h2>
+        <p>Nehéz számítások háttérszálon (nem blokkolja a felületet)</p>
+        <input type="number" id="worker-input" value="10" min="1">
+        <button onclick="startWorker()">Számolj faktoriálist</button>
+        <button onclick="stopWorker()">Megállítás</button>
+        <div id="worker-output"></div>
+    </section>
+
+    <section id="sse">
+        <h2>Server-Sent Events</h2>
+        <p>Valós idejű események fogadása szervertől (szimulálva)</p>
+        <button onclick="startSSE()">Események indítása</button>
+        <button onclick="stopSSE()">Leállítás</button>
+        <div id="sse-output"></div>
+    </section>
+
+    <section id="geolocation">
+        <h2>Geolocation API</h2>
+        <p>Felhasználó helyzetének meghatározása</p>
+        <button onclick="getLocation()">Helyzet kérése</button>
+        <div id="location-output"></div>
+    </section>
+
+    <section id="drag-drop">
+        <h2>Drag & Drop API</h2>
+        <p>Elemek húzogatása az oldalon belül</p>
+        <div id="drag-item" draggable="true" style="width: 100px; height: 50px; background-color: #3498db; color: white; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+            Húzz engem!
+        </div>
+        <div class="drag-area" id="drop-area">
+            Engedj ide!
+        </div>
+        <p id="drag-output"></p>
+    </section>
+
+    <section id="canvas">
+        <h2>Canvas</h2>
+        <p>Grafikus rajzolás JavaScript segítségével</p>
+        <canvas id="myCanvas" width="300" height="200"></canvas>
+        <button onclick="drawOnCanvas()">Rajzolás</button>
+        <button onclick="clearCanvas()">Törlés</button>
+    </section>
+
+    <section id="svg">
+        <h2>SVG</h2>
+        <p>Skálázható vektorgrafika</p>
+        <svg width="300" height="200">
+            <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+            <rect x="120" y="10" width="150" height="80" rx="10" fill="blue" />
+            <text x="150" y="150" font-family="Arial" font-size="20" fill="red">SVG példa</text>
+        </svg>
+    </section>
+
+    <script>
+        // Web Storage
+        function saveToStorage() {
+            const input = document.getElementById('storage-input').value;
+            localStorage.setItem('userInput', input);
+            document.getElementById('storage-output').textContent = 'Adatok elmentve!';
+        }
+
+        function loadFromStorage() {
+            const savedData = localStorage.getItem('userInput');
+            document.getElementById('storage-output').textContent = 
+                savedData ? `Mentett adat: ${savedData}` : 'Nincsenek mentett adatok';
+        }
+
+        function clearStorage() {
+            localStorage.removeItem('userInput');
+            document.getElementById('storage-output').textContent = 'Adatok törölve!';
+        }
+
+        // Web Workers
+        let worker;
+
+        function startWorker() {
+            if (typeof(Worker) !== "undefined") {
+                if (!worker) {
+                    worker = new Worker('worker.js');
+                }
+                const num = document.getElementById('worker-input').value;
+                worker.postMessage(num);
+                
+                worker.onmessage = function(event) {
+                    document.getElementById('worker-output').innerHTML += 
+                        `${num}! = ${event.data}<br>`;
+                };
+            } else {
+                document.getElementById('worker-output').innerHTML = 
+                    "A böngésződ nem támogatja a Web Workereket!";
+            }
+        }
+
+        function stopWorker() {
+            if (worker) {
+                worker.terminate();
+                worker = null;
+                document.getElementById('worker-output').innerHTML += 
+                    "Számítás leállítva.<br>";
+            }
+        }
+
+        // Server-Sent Events (szimulálva)
+        let eventSource;
+        let counter = 0;
+
+        function startSSE() {
+            if (typeof(EventSource) !== "undefined") {
+                document.getElementById('sse-output').innerHTML = 
+                    "Események indítása...<br>";
+                
+                // Valódi SSE helyett szimuláljuk
+                const sseInterval = setInterval(() => {
+                    counter++;
+                    document.getElementById('sse-output').innerHTML += 
+                        `Esemény ${counter} - ${new Date().toLocaleTimeString()}<br>`;
+                    
+                    if (counter >= 10) {
+                        clearInterval(sseInterval);
+                        document.getElementById('sse-output').innerHTML += 
+                            "Események vége.<br>";
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('sse-output').innerHTML = 
+                    "A böngésződ nem támogatja a Server-Sent Events-t!";
+            }
+        }
+
+        function stopSSE() {
+            document.getElementById('sse-output').innerHTML += 
+                "Események leállítva.<br>";
+            counter = 0;
+        }
+
+        // Geolocation
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    showPosition,
+                    showError
+                );
+            } else {
+                document.getElementById("location-output").innerHTML = 
+                    "A böngésződ nem támogatja a geolokációt!";
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById("location-output").innerHTML = 
+                `Szélesség: ${position.coords.latitude}<br>` +
+                `Hosszúság: ${position.coords.longitude}<br>` +
+                `Pontosság: ${position.coords.accuracy} méter`;
+        }
+
+        function showError(error) {
+            let message;
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "Felhasználó elutasította a helymeghatározást.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Helyinformáció nem elérhető.";
+                    break;
+                case error.TIMEOUT:
+                    message = "A helymeghatározás túllépte az időkeretet.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = "Ismeretlen hiba történt.";
+                    break;
+            }
+            document.getElementById("location-output").innerHTML = message;
+        }
+
+        // Drag and Drop
+        document.addEventListener('DOMContentLoaded', function() {
+            const dragItem = document.getElementById('drag-item');
+            const dropArea = document.getElementById('drop-area');
+
+            dragItem.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', dragItem.id);
+                setTimeout(() => dragItem.style.display = 'none', 0);
+            });
+
+            dropArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropArea.style.backgroundColor = '#e6f7ff';
+            });
+
+            dropArea.addEventListener('dragleave', function() {
+                dropArea.style.backgroundColor = '';
+            });
+
+            dropArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                const id = e.dataTransfer.getData('text/plain');
+                const draggedElement = document.getElementById(id);
+                
+                dropArea.appendChild(draggedElement);
+                draggedElement.style.display = 'flex';
+                dropArea.style.backgroundColor = '';
+                
+                document.getElementById('drag-output').textContent = 
+                    'Elem sikeresen elhelyezve!';
+            });
+        });
+
+        // Canvas
+        function drawOnCanvas() {
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Törlés
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Háttér
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Rajzolás
+            ctx.fillStyle = '#3498db';
+            ctx.beginPath();
+            ctx.arc(100, 100, 50, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(200, 50, 80, 100);
+            
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '20px Arial';
+            ctx.fillText('Canvas', 100, 180);
+        }
+
+        function clearCanvas() {
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Automatikus rajzolás betöltéskor
+        window.onload = drawOnCanvas;
+    </script>
+</body>
+</html>

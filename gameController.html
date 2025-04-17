@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web-programozás 1 - Főoldal</title>
+    <title>Játékvezérlő Rendszer</title>
     <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
-    <header>
-        <h1>Web-programozás-1 Előadás Házi feladat</h1>
-    </header>
+    <h1>Játékvezérlő Rendszer</h1>
     
     <nav>
         <ul>
@@ -25,21 +24,10 @@
           <li class="active"><a href="react.html">React</a></li>
         </ul>
       </nav>
-    
-    <div class="container">
-        <aside>
-            <h3>Oldalsáv</h3>
-            <p>Ez az oldalsáv tartalma. Itt lehetnek linkek, információk vagy egyéb tartalmak.</p>
-        </aside>
-        
-        <div class="content">
-            <h2>Üdvözöljük a weboldalon!</h2>
-            <p>Ez a főoldal tartalma. Minden oldalon ugyanaz a struktúra, csak ez a tartalmi rész változik.</p>
-        </div>
-    </div>
-    
-    <footer>
-        <p>Készítette: Hallgató Neve (ABC123) és Társa Neve (XYZ456)</p>
-    </footer>
+    <div id="controllersContainer"></div>
+    <div id="gameLog" class="log"></div>
+
+    <script src="gameController.js"></script>
 </body>
+
 </html>

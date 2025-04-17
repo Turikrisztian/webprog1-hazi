@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX CRUD Alkalmazás</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, button {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .success {
+            color: green;
+            font-size: 0.9em;
+        }
+        #dataOutput {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AJAX CRUD Alkalmazás</h1>
+    
+    <nav>
+        <ul>
+          <li><a href="../index.html">Főoldal</a></li>
+          <li><a href="../page1.html">1. oldal</a></li>
+          <li><a href="../page2.html">2. oldal</a></li>
+          <li><a href="../page3.html">3. oldal</a></li>
+          <li><a href="../table.html">Táblázat</a></li>
+          <li><a href="../html5_features.html">HTML5</a></li>
+          <li><a href="../ajax.html">AJAX</a></li>
+          <li><a href="../gameController.html">Játékvezérlő</a></li>
+          <li><a href="../chart.html">Diagram</a></li>
+          <li class="active"><a href="react.html">React</a></li>
+        </ul>
+      </nav>
+    <!-- Read Section -->
+    <div class="section">
+        <h2>Adatok lekérése</h2>
+        <button id="getData">Összes adat lekérése</button>
+        <div id="dataOutput"></div>
+        <div id="statsOutput" class="stats"></div>
+    </div>
+    
+    <!-- Create Section -->
+    <div class="section">
+        <h2>Új adat létrehozása</h2>
+        <div class="form-group">
+            <label for="createCode">Kód:</label>
+            <input type="text" id="createCode" maxlength="30">
+            <div id="createCodeError" class="error"></div>
+        </div>
+        <div class="form-group">
+            <label for="createName">Név:</label>
+            <input type="text" id="createName" maxlength="30">
+            <div id="createNameError" class="error"></div>
+        </div>
+        <div class="form-group">
+            <label for="createHeight">Magasság:</label>
+            <input type="number" id="createHeight">
+            <div id="createHeightError" class="error"></div>
+        </div>
+        <button id="createData">Adat létrehozása</button>
+        <div id="createResult" class="result"></div>
+    </div>
+    
+    <!-- Update Section -->
+    <div class="section">
+        <h2>Adat módosítása</h2>
+        <div class="form-group">
+            <label for="updateId">ID:</label>
+            <input type="number" id="updateId">
+            <button id="getDataForId">Adatok lekérése ID alapján</button>
+            <div id="updateIdError" class="error"></div>
+        </div>
+        <div class="form-group">
+            <label for="updateCode">Kód:</label>
+            <input type="text" id="updateCode" maxlength="30">
+            <div id="updateCodeError" class="error"></div>
+        </div>
+        <div class="form-group">
+            <label for="updateName">Név:</label>
+            <input type="text" id="updateName" maxlength="30">
+            <div id="updateNameError" class="error"></div>
+        </div>
+        <div class="form-group">
+            <label for="updateHeight">Magasság:</label>
+            <input type="number" id="updateHeight">
+            <div id="updateHeightError" class="error"></div>
+        </div>
+        <button id="updateData">Adat frissítése</button>
+        <div id="updateResult" class="result"></div>
+    </div>
+    
+    <!-- Delete Section -->
+    <div class="section">
+        <h2>Adat törlése</h2>
+        <div class="form-group">
+            <label for="deleteId">ID:</label>
+            <input type="number" id="deleteId">
+            <div id="deleteIdError" class="error"></div>
+        </div>
+        <button id="deleteData">Adat törlése</button>
+        <div id="deleteResult" class="result"></div>
+    </div>
+
+    <script src="ajax.js"></script>
+</body>
+
+</html>

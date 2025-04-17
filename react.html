@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Alkalmazás</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Tic-Tac-Toe specifikus stílusok */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      margin: 20px auto;
+    }
+    
+    .square {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: bold;
+      background: #fff;
+      border: 2px solid #3498db;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .square:hover {
+      background: #f0f8ff;
+    }
+    
+    .square:disabled {
+      cursor: not-allowed;
+    }
+    
+    .status {
+      margin: 20px 0;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    
+    .reset-btn {
+      padding: 10px 20px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    
+    /* Feladatlista stílusok */
+    .task-manager {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fejléc és navigáció marad változatlan -->
+  
+  <nav>
+    <ul>
+      <li><a href="../index.html">Főoldal</a></li>
+      <li><a href="../page1.html">1. oldal</a></li>
+      <li><a href="../page2.html">2. oldal</a></li>
+      <li><a href="../page3.html">3. oldal</a></li>
+      <li><a href="../table.html">Táblázat</a></li>
+      <li><a href="../html5_features.html">HTML5</a></li>
+      <li><a href="../ajax.html">AJAX</a></li>
+      <li><a href="../gameController.html">Játékvezérlő</a></li>
+      <li><a href="../chart.html">Diagram</a></li>
+      <li class="active"><a href="react.html">React</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <aside>
+      <h3>Oldalsáv</h3>
+      <p>React alkalmazások</p>
+    </aside>
+    
+    <div class="content">
+      <div id="root"></div>
+    </div>
+  </div>
+
+  <!-- Lábléc marad változatlan -->
+
+  <script type="text/babel">
+    // Tic-Tac-Toe komponens
+    function TicTacToe() {
+      const [board, setBoard] = React.useState(Array(9).fill(null));
+      const [isXNext, setIsXNext] = React.useState(true);
+      
+      const calculateWinner = (squares) => {
+        const lines = [
+          [0, 1, 2], [3, 4, 5], [6, 7, 8], // sorok
+          [0, 3, 6], [1, 4, 7], [2, 5, 8], // oszlopok
+          [0, 4, 8], [2, 4, 6]             // átlók
+        ];
+        
+        for (let line of lines) {
+          const [a, b, c] = line;
+          if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+          }
+        }
+        return null;
+      };
+      
+      const handleClick = (i) => {
+        if (calculateWinner(board) || board[i]) return;
+        
+        const newBoard = board.slice();
+        newBoard[i] = isXNext ? 'X' : 'O';
+        setBoard(newBoard);
+        setIsXNext(!isXNext);
+      };
+      
+      const winner = calculateWinner(board);
+      const status = winner 
+        ? `Győztes: ${winner}`
+        : board.every(square => square) 
+          ? 'Döntetlen!'
+          : `Következő játékos: ${isXNext ? 'X' : 'O'}`;
+      
+      const resetGame = () => {
+        setBoard(Array(9).fill(null));
+        setIsXNext(true);
+      };
+      
+      const renderSquare = (i) => {
+        return (
+          <button 
+            className="square" 
+            onClick={() => handleClick(i)}
+            disabled={winner || board[i]}
+          >
+            {board[i]}
+          </button>
+        );
+      };
+      
+      return (
+        <div className="tic-tac-toe">
+          <h2>Tic-Tac-Toe Játék</h2>
+          <div className="status">{status}</div>
+          <div className="board">
+            {renderSquare(0)}
+            {renderSquare(1)}
+            {renderSquare(2)}
+            {renderSquare(3)}
+            {renderSquare(4)}
+            {renderSquare(5)}
+            {renderSquare(6)}
+            {renderSquare(7)}
+            {renderSquare(8)}
+          </div>
+          <button onClick={resetGame} className="reset-btn">
+            Játék újrakezdése
+          </button>
+        </div>
+      );
+    }
+
+    // TaskManager komponens (marad változatlan)
+    function TaskManager() { /* ... */ }
+
+    // Fő App komponens
+    function App() {
+      const [currentApp, setCurrentApp] = React.useState('tictactoe');
+      
+      return (
+        <div className="react-app-container">
+          <div className="react-nav">
+            <button 
+              className={currentApp === 'tictactoe' ? 'active' : ''}
+              onClick={() => setCurrentApp('tictactoe')}
+            >
+              Tic-Tac-Toe
+            </button>
+            <button
+              className={currentApp === 'tasks' ? 'active' : ''}
+              onClick={() => setCurrentApp('tasks')}
+            >
+              Feladatlista
+            </button>
+          </div>
+          
+          {currentApp === 'tictactoe' ? <TicTacToe /> : <TaskManager />}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

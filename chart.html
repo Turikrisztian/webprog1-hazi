@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChartJS Táblázat és Diagram</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+        .selected {
+            background-color: #d4edda;
+        }
+        .chart-container {
+            margin-top: 30px;
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Táblázat és ChartJS Diagram</h1>
+    
+    <nav>
+        <ul>
+          <li><a href="../index.html">Főoldal</a></li>
+          <li><a href="../page1.html">1. oldal</a></li>
+          <li><a href="../page2.html">2. oldal</a></li>
+          <li><a href="../page3.html">3. oldal</a></li>
+          <li><a href="../table.html">Táblázat</a></li>
+          <li><a href="../html5_features.html">HTML5</a></li>
+          <li><a href="../ajax.html">AJAX</a></li>
+          <li><a href="../gameController.html">Játékvezérlő</a></li>
+          <li><a href="../chart.html">Diagram</a></li>
+          <li class="active"><a href="react.html">React</a></li>
+        </ul>
+      </nav>
+    <div class="instructions">
+        <p>Kattints a táblázat bármelyik sorára a diagram megjelenítéséhez!</p>
+    </div>
+    
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Év 1</th>
+                <th>Év 2</th>
+                <th>Év 3</th>
+                <th>Év 4</th>
+                <th>Év 5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>45</td>
+                <td>60</td>
+                <td>55</td>
+                <td>75</td>
+                <td>80</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>30</td>
+                <td>45</td>
+                <td>50</td>
+                <td>65</td>
+                <td>70</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>20</td>
+                <td>35</td>
+                <td>40</td>
+                <td>55</td>
+                <td>60</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>10</td>
+                <td>25</td>
+                <td>30</td>
+                <td>45</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>5</td>
+                <td>15</td>
+                <td>20</td>
+                <td>35</td>
+                <td>40</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="chart-container">
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <script>
+        // Táblázat sorok kiválasztása
+        const tableRows = document.querySelectorAll('#dataTable tbody tr');
+        let selectedRow = null;
+        let chart = null;
+
+        tableRows.forEach(row => {
+            row.addEventListener('click', function() {
+                // Előző kijelölés eltávolítása
+                if (selectedRow) {
+                    selectedRow.classList.remove('selected');
+                }
+                
+                // Új kijelölés beállítása
+                this.classList.add('selected');
+                selectedRow = this;
+                
+                // Sor adatainak kinyerése
+                const cells = this.querySelectorAll('td');
+                const rowId = cells[0].textContent;
+                const data = [];
+                
+                for (let i = 1; i < cells.length; i++) {
+                    data.push(parseInt(cells[i].textContent));
+                }
+                
+                // Diagram frissítése
+                updateChart(rowId, data);
+            });
+        });
+
+        // Diagram létrehozása/frissítése
+        function updateChart(rowId, data) {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            const labels = ['Év 1', 'Év 2', 'Év 3', 'Év 4', 'Év 5'];
+            
+            // Ha már létezik diagram, töröljük
+            if (chart) {
+                chart.destroy();
+            }
+            
+            // Új diagram létrehozása
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Sor ${rowId} adatai`,
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Érték'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Évek'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Sor ${rowId} adatainak változása`,
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

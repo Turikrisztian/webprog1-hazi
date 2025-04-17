@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Táblázat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="crud-container">
+        <h1>Táblázat kezelő</h1>
+        
+        <nav>
+            <ul>
+              <li><a href="../index.html">Főoldal</a></li>
+              <li><a href="../page1.html">1. oldal</a></li>
+              <li><a href="../page2.html">2. oldal</a></li>
+              <li><a href="../page3.html">3. oldal</a></li>
+              <li><a href="../table.html">Táblázat</a></li>
+              <li><a href="../html5_features.html">HTML5</a></li>
+              <li><a href="../ajax.html">AJAX</a></li>
+              <li><a href="../gameController.html">Játékvezérlő</a></li>
+              <li><a href="../chart.html">Diagram</a></li>
+              <li class="active"><a href="react.html">React</a></li>
+            </ul>
+          </nav>
+        <!-- Keresés/szűrés -->
+        <div class="filter-section">
+            <input type="text" id="searchInput" placeholder="Keresés az összes oszlopban...">
+            <button id="searchBtn">Keresés</button>
+            <button id="resetBtn">Szűrők törlése</button>
+        </div>
+        
+        <!-- Űrlap új elem létrehozásához/módosításhoz -->
+        <div class="form-section">
+            <h2 id="formTitle">Új elem hozzáadása</h2>
+            <form id="dataForm">
+                <input type="hidden" id="editId">
+                
+                <div class="form-group">
+                    <label for="name">Név*</label>
+                    <input type="text" id="name" required minlength="2" maxlength="50">
+                    <div class="error-message" id="nameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Életkor*</label>
+                    <input type="number" id="age" required min="18" max="120">
+                    <div class="error-message" id="ageError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Státusz</label>
+                    <select id="status">
+                        <option value="Aktív">Aktív</option>
+                        <option value="Inaktív">Inaktív</option>
+                        <option value="Felfüggesztve">Felfüggesztve</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="submitBtn">Mentés</button>
+                <button type="button" id="cancelBtn">Mégse</button>
+            </form>
+        </div>
+        
+        <!-- Táblázat -->
+        <div class="table-section">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th data-column="name" class="sortable">Név <span class="sort-icon">↑↓</span></th>
+                        <th data-column="email" class="sortable">Email <span class="sort-icon">↑↓</span></th>
+                        <th data-column="age" class="sortable">Életkor <span class="sort-icon">↑↓</span></th>
+                        <th data-column="status" class="sortable">Státusz <span class="sort-icon">↑↓</span></th>
+                        <th>Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- JavaScript fogja feltölteni -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="table.js"></script>
+</body>
+</html>
